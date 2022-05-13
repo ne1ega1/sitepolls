@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ question.question_text }}</title>
+</head>
+<body>
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -> {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+<form action="{% url 'covid:cancel_vote' question.id %}" method="post">
+{% csrf_token %}
+<input type="submit" name="choice" id="choice.id" value="Отменить голос">
+</form>
+</body>
+</html>
