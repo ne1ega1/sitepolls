@@ -1,7 +1,9 @@
-<h1>{{ title }}</h1>
-
+{% extends 'covid/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-outline-light me-2">Регистрация</button>
 </form>
+{% endblock %}

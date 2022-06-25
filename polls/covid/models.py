@@ -1,6 +1,7 @@
 import datetime
-from django.db import models
 from django.utils import timezone
+from django.conf import settings
+from django.db import models
 
 
 class Question(models.Model):
@@ -24,7 +25,6 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200, verbose_name="Ответы")
-    votes = models.IntegerField(verbose_name="Голосов", default=0)
 
     def __str__(self):
         return self.choice_text
@@ -32,3 +32,20 @@ class Choice(models.Model):
     class Meta:
         verbose_name = 'Ответы'
         verbose_name_plural = 'Ответы'
+
+
+class UserVote(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name="Пользователь",
+                             on_delete=models.DO_NOTHING)
+    choice = models.ForeignKey(Choice,
+                               verbose_name="Выбранный ответ",
+                               on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f'{self.user} - {self.choice.question}'
+
+    class Meta:
+        unique_together = [['user', 'choice']]
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'

@@ -1,86 +1,38 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Вопросы для голосования</title>
-</head>
-<header class="p-3 bg-dark text-white">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"/>
-                </svg>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">Домой</a></li>
-                <!--          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>-->
-                <!--          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>-->
-                <!--          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>-->
-                <!--          <li><a href="#" class="nav-link px-2 text-white">About</a></li>-->
-            </ul>
-
-            <!--        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">-->
-            <!--          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">-->
-            <!--        </form>-->
-
-            <div class="text-end">
-                {% if request.user.is_authenticated %}
-                <p>Привет, {{user.username}}!     <a href="{% url 'covid:logout' %}">
-                    <button type="button" class="btn btn-outline-light me-2">Выйти</button></a></p>
-                {% else %}
-                <a href="{% url 'covid:login' %}">
-                <button type="button" class="btn btn-outline-light me-2">Войти</button>
-                </a>
-                <a href="{% url 'covid:register' %}">
-                <button type="button" class="btn btn-warning">Регистрация</button>
-                </a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</header>
-<body>
+{% extends 'covid/base.html' %}
+{% block title %}Вопросы для голосования{% endblock %}
+{% block content %}
 {% if request.user.is_authenticated %}
-    {% if latest_question_list %}
-    <ul>
-        {% for question in latest_question_list %}
-        <div class="list-group">
-            <a href="{% url 'covid:detail' question.id %}" class="list-group-item list-group-item-action d-flex gap-3 py-3"
-               aria-current="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-question-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-                </svg>
-                <div class="d-flex gap-2 w-100 justify-content-between">
-                    <div>
-                        <h6 class="mb-0">{{ question.question_text }}</h6>
-                    </div>
-                    <small class="opacity-50 text-nowrap">{{ question.pub_date }}</small>
+{% if latest_question_list %}
+<ul>
+    {% for question in latest_question_list %}
+    <div class="list-group">
+        <a href="{% url 'covid:detail' question.id %}" class="list-group-item list-group-item-action d-flex gap-3 py-3"
+           aria-current="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-question-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2
+                             0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134
+                             1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168
+                             1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927
+                             1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267
+                             0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927
+                             0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+            </svg>
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">{{ question.question_text }}</h6>
                 </div>
-            </a>
-        </div>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <h4>Нет вопросов для голосования</h4>
-    {% endif %}
+                <small class="opacity-50 text-nowrap">{{ question.pub_date }}</small>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</ul>
+{% else %}
+<h4>Нет вопросов для голосования</h4>
+{% endif %}
 {% else %}
 <h4>Список вопросов могут просматривать только авторизованные пользователи</h4>
 {% endif %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}
