@@ -28,8 +28,7 @@ class DetailsView(View):
                                              'choices': choices,
                                              'error_message': f'Вы уже выбрали ответ "{user_choice}",\
                                               выберите другой вопрос или проголосуйте заново'})
-        else:
-            return TemplateResponse(request, 'covid/detail.html', {'question': question})
+        return TemplateResponse(request, 'covid/detail.html', {'question': question})
 
 
 class ResultsView(TemplateView):
