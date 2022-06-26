@@ -3,13 +3,9 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login
 from django.views.generic import ListView, TemplateView, CreateView
 from django.views import View
-from django.utils.regex_helper import Choice
-from django.utils import timezone
-from django.db.models import Count
-from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.template.response import TemplateResponse
-from .models import *
+from .services import *
 
 
 class IndexView(ListView):
@@ -17,23 +13,21 @@ class IndexView(ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone
-                               .now()).order_by('pub_date')[:5]
+        queryset = get_list_of_question()
+        return queryset
 
 
 class DetailsView(View):
     def get(self, request, question_id):
-        question = get_object_or_404(Question, pk=question_id)
-        if UserVote.objects.select_related('choice')\
-                           .filter(user=request.user, choice__question_id=question_id).exists():
-            choices = question.choice_set.annotate(votes_count=Count('uservote'))
-            user_choice = Choice.objects.filter(question_id=question_id, id__in=request.user.uservote_set
-                                        .values_list('choice_id', flat=True)).first()
+        question = get_question(question_id)
+        if check_user_vote(request, question_id) == True:
+            choices = get_count_choices(question_id)
+            user_choice = get_user_choice(request, question_id)
             return TemplateResponse(request, 'covid/results.html',
-                                    {'question': question,
-                                     'choices': choices,
-                                     'error_message': f'Вы уже выбрали ответ "{user_choice}",\
-                                      выберите другой вопрос или проголосуйте заново'})
+                                            {'question': question,
+                                             'choices': choices,
+                                             'error_message': f'Вы уже выбрали ответ "{user_choice}",\
+                                              выберите другой вопрос или проголосуйте заново'})
         else:
             return TemplateResponse(request, 'covid/detail.html', {'question': question})
 
@@ -65,15 +59,15 @@ class LogoutUser(LogoutView):
 
 class Vote(View):
     def post(self, request, question_id):
-        question = get_object_or_404(Question, pk=question_id)
+        question = get_question(question_id)
         choice_id = request.POST.get('choice')
         if choice_id is None:
             return TemplateResponse(request, 'covid/detail.html',
                                             {'question': question,
                                              'error_message': "Вы не сделали выбор"})
         else:
-            UserVote.objects.create(user=request.user, choice_id=choice_id)
-        choices = question.choice_set.annotate(votes_count=Count('uservote'))
+            create_user_vote(request, choice_id)
+        choices = get_count_choices(question_id)
         return TemplateResponse(request, 'covid/results.html',
                                         {'question': question,
                                          'choices': choices})
@@ -81,7 +75,6 @@ class Vote(View):
 
 class CancelVote(View):
     def post(self, request, question_id):
-        question = get_object_or_404(Question, pk=question_id)
-        UserVote.objects.select_related('choice') \
-                        .filter(user=request.user, choice__question_id=question_id).delete()
+        question = get_question(question_id)
+        delete_user_vote(request, question_id)
         return TemplateResponse(request, 'covid/detail.html', {'question': question})
