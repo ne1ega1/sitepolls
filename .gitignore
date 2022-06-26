@@ -1,0 +1,6 @@
+/venv/
+/.idea/
+/polls/polls/.env
+/.gitignore
+/identifier.sqlite
+/polls/db.sqlite3
