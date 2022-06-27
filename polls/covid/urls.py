@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import *
+from .views import IndexView, DetailsView, ResultsView\
+    ,Vote, CancelVote\
+    ,RegisterUser,LoginUser,LogoutUser
 
 app_name = 'covid'
 
