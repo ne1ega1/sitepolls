@@ -5,6 +5,7 @@ from django.views.generic import ListView, TemplateView, CreateView
 from django.views import View
 from django.template.response import TemplateResponse
 from .services import *
+from django.shortcuts import redirect
 
 
 class IndexView(ListView):
