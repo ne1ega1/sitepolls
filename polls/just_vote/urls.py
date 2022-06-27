@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import IndexView, DetailsView, ResultsView\
-    ,Vote, CancelVote\
-    ,RegisterUser,LoginUser,LogoutUser
+from .views import IndexView, DetailsView, ResultsView, \
+    Vote, CancelVote, RegisterUser, LoginUser, LogoutUser
 
-app_name = 'covid'
+app_name = 'just_vote'
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),

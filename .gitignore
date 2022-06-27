@@ -4,4 +4,4 @@
 /.gitignore
 /identifier.sqlite
 /polls/db.sqlite3
-/polls/covid/migrations/
+/polls/just_vote/migrations/

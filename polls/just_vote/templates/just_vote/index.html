@@ -1,4 +1,4 @@
-{% extends 'covid/base.html' %}
+{% extends 'just_vote/base.html' %}
 {% block title %}Вопросы для голосования{% endblock %}
 {% block content %}
 {% if request.user.is_authenticated %}
@@ -6,7 +6,7 @@
 <ul>
     {% for question in latest_question_list %}
     <div class="list-group">
-        <a href="{% url 'covid:detail' question.id %}" class="list-group-item list-group-item-action d-flex gap-3 py-3"
+        <a href="{% url 'just_vote:detail' question.id %}" class="list-group-item list-group-item-action d-flex gap-3 py-3"
            aria-current="true">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-question-square" viewBox="0 0 16 16">

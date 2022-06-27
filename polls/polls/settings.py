@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'covid.apps.CovidConfig',
+    'just_vote.apps.JustVoteConfig',
 ]
 
 MIDDLEWARE = [

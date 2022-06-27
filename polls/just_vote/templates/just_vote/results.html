@@ -1,4 +1,4 @@
-{% extends 'covid/base.html' %}
+{% extends 'just_vote/base.html' %}
 {% block title %}{{ question.question_text }}{% endblock %}
 {% block content %}
 <h1>{{ question.question_text }}</h1>
@@ -8,7 +8,7 @@
     <li>{{ choice.choice_text }} -> {{ choice.votes_count }}</li>
     {% endfor %}
 </ul>
-<form action="{% url 'covid:cancel_vote' question.id %}" method="POST">
+<form action="{% url 'just_vote:cancel_vote' question.id %}" method="POST">
     {% csrf_token %}
     <input type="submit" value="Отменить голос">
 </form>

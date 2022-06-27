@@ -1,7 +1,7 @@
 import datetime
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-from covid.models import Question, UserVote, Choice
+from just_vote.models import Question, UserVote, Choice
 
 
 def get_first_five_question():

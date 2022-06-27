@@ -1,8 +1,7 @@
 from django.apps import AppConfig
 
 
-class CovidConfig(AppConfig):
+class JustVoteConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'covid'
-    # FIXME: я хз как назвать, че за covid бля
+    name = 'just_vote'
     verbose_name = 'Главное приложение'

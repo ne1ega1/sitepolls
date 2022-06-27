@@ -1,8 +1,8 @@
-{% extends 'covid/base.html' %}
+{% extends 'just_vote/base.html' %}
 {% block title %}{{ question.question_text }}{% endblock %}
 {% block content %}
 <ul>
-    <form action="{% url 'covid:vote' question.id %}" method="POST">
+    <form action="{% url 'just_vote:vote' question.id %}" method="POST">
         {% csrf_token %}
         <fieldset>
             <legend><h1>{{ question.question_text }}</h1></legend>

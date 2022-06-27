@@ -21,14 +21,14 @@
             </ul>
             <div class="text-end">
                 {% if request.user.is_authenticated %}
-                <p>Привет, {{user.username}}! <a href="{% url 'covid:logout' %}">
+                <p>Привет, {{user.username}}! <a href="{% url 'just_vote:logout' %}">
                     <button type="button" class="btn btn-outline-light me-2">Выйти</button>
                 </a></p>
                 {% else %}
-                <a href="{% url 'covid:login' %}">
+                <a href="{% url 'just_vote:login' %}">
                     <button type="button" class="btn btn-outline-light me-2">Войти</button>
                 </a>
-                <a href="{% url 'covid:register' %}">
+                <a href="{% url 'just_vote:register' %}">
                     <button type="button" class="btn btn-warning">Регистрация</button>
                 </a>
                 {% endif %}

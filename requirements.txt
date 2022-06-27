@@ -6,3 +6,5 @@ python-dotenv        0.20.0
 setuptools           58.1.0
 sqlparse             0.4.2
 tzdata               2022.1
+Django~=4.0.4
+python-dotenv~=0.20.0

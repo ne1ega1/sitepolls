@@ -3,6 +3,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('covid.urls')),
+    path('', include('just_vote.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
